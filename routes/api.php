@@ -13,6 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/v1', function() {
+    Route::post('/', function () { return ['name' => 'api.simplegame', 'rev' => 'v1.0.0'];});
+    Route::post('/users/login', 'ApiAuthController@login');
+
+    Route::middleware('token')->group(function() {
+        Route::post('/users/list');
+
+        Route::post('/games/list');
+
+        Route::post('/games/new');
+
+        Route::post('/games/play');
+
+        Route::post('/games/state');
+    });
 });
