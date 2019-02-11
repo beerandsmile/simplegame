@@ -13,19 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::prefix('/v1', function() {
-    Route::post('/', function () { return ['name' => 'api.simplegame', 'rev' => 'v1.0.0'];});
-    Route::post('/users/login', 'ApiAuthController@login');
+Route::prefix('v1')->group(function() {
+    Route::get('/', function () { return ['name' => 'api.simplegame', 'rev' => 'v1.0.0'];});
+    Route::post('/users/login', 'Api\AuthController@login');
 
     Route::middleware('token')->group(function() {
-        Route::post('/users/list');
+        Route::post('/users/list', 'Api\UserController@login');
 
-        Route::post('/games/list');
+        Route::post('/games/list', 'Api\GameController@login');
 
-        Route::post('/games/new');
+        Route::post('/games/new', 'Api\GameController@login');
 
-        Route::post('/games/play');
+        Route::post('/games/play', 'Api\GameController@login');
 
-        Route::post('/games/state');
+        Route::post('/games/state', 'Api\GameController@login');
     });
 });
